@@ -17,9 +17,7 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
     useNewUrlParser: true, 
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
+    
 })
 
 
@@ -46,9 +44,8 @@ app.get("/api/workouts", (req, res) => {
     })
 })
 
-app.post("/api/workouts", ({body}, res) => {
-    db.Exercise.create(body)
-        .then(({_id}) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id }}, { new: true}))
+app.post("/api/workouts", (req, res) => {
+    db.Workout.create({})
         .then(dbWorkout => {
             res.json(dbWorkout)
         })
@@ -56,20 +53,19 @@ app.post("/api/workouts", ({body}, res) => {
             res.json(err)
         });
 });
-// app.put("/api/workouts/:id", (req, res) => {
-//     db.Exercise.create(req.body)
-//     .then(data => {
-//       return db.Workout.findOneAndUpdate({_id: req.params.id},{$push: data})  
-//     })
-//     .then(newData => {
-//         if(!newData){
-//             return res.status(404).json({message: "No Workout Found"})
-//         }
-//         res.json(newData)
-//     })
-//     .catch(err => console.log(err))
+app.put("/api/workouts/:id", ({body, params}, res) => {
+    db.Workout.findOneAndUpdate({_id: params.id},
+        {$push: {exercises: body}}, 
+        { upsert: true, 
+        useFindAndModify: false},  
     
-// })
+    newData => {
+       
+        res.json(newData)
+    })
+    
+    
+})
 
 mongoose.connection.once("open", ()=>{
     app.listen(PORT, ()=>{

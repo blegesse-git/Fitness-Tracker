@@ -12,10 +12,7 @@ const WorkoutSchema = new Schema ({
             ref: "Exercise"
         }
     ],
-    totalDuration: {
-        type: Number,
-        default: 0
-    }
+   
       
 
 })
