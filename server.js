@@ -20,52 +20,51 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
     
 })
 
+app.use(require("./routes/api.js"));
+app.use(require("./routes/html.js"));
 
 
 
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname + "/public/index.html"))
+// });
+// app.get("/exercise", (req, res) => {
+//     res.sendFile(path.join(__dirname + "/public/exercise.html"))
+// });
+// app.get("/stats", (req, res) => {
+//     res.sendFile(path.join(__dirname + "/public/stats.html"))
+// });
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/public/index.html"))
-});
-app.get("/exercise", (req, res) => {
-    res.sendFile(path.join(__dirname + "/public/exercise.html"))
-});
-app.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname + "/public/stats.html"))
-});
+// app.get("/api/workouts", (req, res) => {
+//     db.Workout.find({}, (err, workouts) => {
+//         if(err){
+//             console.log(err)
+//         }else {
+//             res.json(workouts)
+//         }
+//     })
+// })
 
-app.get("/api/workouts", (req, res) => {
-    db.Workout.find({}, (err, workouts) => {
-        if(err){
-            console.log(err)
-        }else {
-            res.json(workouts)
-        }
-    })
-})
-
-app.post("/api/workouts", (req, res) => {
-    db.Workout.create({})
-        .then(dbWorkout => {
-            res.json(dbWorkout)
-        })
-        .catch(err => {
-            res.json(err)
-        });
-});
-app.put("/api/workouts/:id", ({body, params}, res) => {
-    db.Workout.findOneAndUpdate({_id: params.id},
-        {$push: {exercises: body}}, 
-        { upsert: true, 
-        useFindAndModify: false},  
+// app.post("/api/workouts", (req, res) => {
+//     db.Workout.create({})
+//         .then(dbWorkout => {
+//             res.json(dbWorkout)
+//         })
+      
+// });
+// app.put("/api/workouts/:workout", ({body, params}, res) => {
+//     db.Workout.findOneAndUpdate({_id: params.id},
+//         {$push: {exercises: body}}, 
+//         { upsert: true, 
+//         useFindAndModify: false},  
     
-    newData => {
+//         newData => {
        
-        res.json(newData)
-    })
+//         res.json(newData)
+//     })
     
     
-})
+// })
 
 mongoose.connection.once("open", ()=>{
     app.listen(PORT, ()=>{
