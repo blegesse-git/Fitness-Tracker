@@ -9,3 +9,5 @@
 
 A consumer will reach their fitness goals more quickly when they track their workout progress.
 
+![readme2](https://user-images.githubusercontent.com/66275100/98410041-874b0f00-2039-11eb-8ef4-71b32ba65609.jpg)
+![readme1](https://user-images.githubusercontent.com/66275100/98410045-8914d280-2039-11eb-94e0-7c48ffcfe4e7.jpg)
